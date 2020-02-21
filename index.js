@@ -70,7 +70,7 @@ const setEventHTML = (event) => {
     deletebtn.setAttribute("class", "btn-delete");
     deletebtn.setAttribute("title", "Delete");
     const deleteIcon = document.createElement("img");
-    deleteIcon.setAttribute("src", "image/delete_forever_FILL0_wght400_GRAD0_opsz24.svg");
+    deleteIcon.setAttribute("src", "assets/delete_forever_FILL0_wght400_GRAD0_opsz24.svg");
     deleteIcon.setAttribute("id", "delImg-"+event.idEvent);
     deletebtn.appendChild(deleteIcon);
 
