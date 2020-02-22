@@ -80,7 +80,7 @@ const setEventHTML = (event) => {
 
     eventsList.appendChild(divContainer);
     startInterval(event);
-    setEventToDelete(event);
+    setEventToDelete(event); 
 }
 
 const formatScreenRemainingTime = (time) => {
