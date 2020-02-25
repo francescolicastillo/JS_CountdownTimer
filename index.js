@@ -66,7 +66,7 @@ const setEventHTML = (event) => {
     divTimer.appendChild(nodeTimer);
 
     const deletebtn = document.createElement("button");
-    deletebtn.setAttribute("id", "delete-"+event.idEvent);
+    deletebtn.setAttribute("id", "delete-"+event.idEvent); 
     deletebtn.setAttribute("class", "btn-delete");
     deletebtn.setAttribute("title", "Delete");
     const deleteIcon = document.createElement("img");
