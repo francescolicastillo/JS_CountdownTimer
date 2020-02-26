@@ -58,7 +58,7 @@ const setEventHTML = (event) => {
     para.appendChild(node);
 
     divContainerDescription.appendChild(divDate);
-    divContainerDescription.appendChild(para);
+    divContainerDescription.appendChild(para); 
 
     const divTimer = document.createElement("div");
     divTimer.setAttribute("class", "restTime");
