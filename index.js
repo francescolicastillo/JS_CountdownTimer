@@ -55,7 +55,7 @@ const setEventHTML = (event) => {
     const para = document.createElement("p");
     para.setAttribute("class", "titleEvent");
     const node = document.createTextNode(event.titleEvent);
-    para.appendChild(node);
+    para.appendChild(node); 
 
     divContainerDescription.appendChild(divDate);
     divContainerDescription.appendChild(para); 
