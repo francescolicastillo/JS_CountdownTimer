@@ -50,7 +50,7 @@ const setEventHTML = (event) => {
     const divDate = document.createElement("div");
     divDate.setAttribute("class", "dateEvent");
     const nodeTime = document.createTextNode(new Date(event.dateEvent).toLocaleString());
-    divDate.appendChild(nodeTime);
+    divDate.appendChild(nodeTime); 
 
     const para = document.createElement("p"); 
     para.setAttribute("class", "titleEvent");
