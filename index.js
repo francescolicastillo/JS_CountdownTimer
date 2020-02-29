@@ -52,7 +52,7 @@ const setEventHTML = (event) => {
     const nodeTime = document.createTextNode(new Date(event.dateEvent).toLocaleString());
     divDate.appendChild(nodeTime);
 
-    const para = document.createElement("p");
+    const para = document.createElement("p"); 
     para.setAttribute("class", "titleEvent");
     const node = document.createTextNode(event.titleEvent);
     para.appendChild(node);
