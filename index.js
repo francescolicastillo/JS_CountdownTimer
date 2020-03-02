@@ -47,7 +47,7 @@ const setEventHTML = (event) => {
     const divContainerDescription = document.createElement("div");
     divContainerDescription.setAttribute("class", "description");
 
-    const divDate = document.createElement("div");
+    const divDate = document.createElement("div"); 
     divDate.setAttribute("class", "dateEvent");
     const nodeTime = document.createTextNode(new Date(event.dateEvent).toLocaleString());
     divDate.appendChild(nodeTime); 
