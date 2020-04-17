@@ -44,7 +44,7 @@ const setEventHTML = (event) => {
     const divContainer = document.createElement("div");
     divContainer.setAttribute("id", event.idEvent);
 
-    const divContainerDescription = document.createElement("div"); 
+    const divContainerDescription = document.createElement("div");
     divContainerDescription.setAttribute("class", "description");
 
     const divDate = document.createElement("div");
