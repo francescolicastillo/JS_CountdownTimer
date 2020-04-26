@@ -1,18 +1,13 @@
 const form = document.querySelector("#formEvent");
-const eventsList = document.querySelector("#events");
 const eventInput = document.querySelector("#eventInput");
 const eventDate = document.querySelector("#dateInput");
+const eventsList = document.querySelector("#events");
 
-let stateEvents = [];
+let stateEvents = JSON.parse(localStorage.getItem("timeCounter")) || [];
 
 const handlerSubmit = (e) => {
     e.preventDefault();
     addEvent();
-}
-
-const handlerInputSpace = (e) => {
-    if(e.code === "Space" && eventInput.value.length <= 1)
-        eventInput.value = "";
 }
 
 function addEvent() {
@@ -26,13 +21,18 @@ function addEvent() {
             intervalEvent: 0,
         }
         stateEvents.push(event);
-        setEventHTML(event);
+        saveData();
+        renderData();
         cleanState();
     }
 }
 
 const isValid = () => {
-    return eventInput.value.length && eventDate.value.length && (new Date(eventDate.value) > new Date(Date.now()));
+    return eventInput.value.length && (new Date(eventDate.value) > new Date(Date.now()));
+}
+
+const saveData = () => {
+    localStorage.setItem("timeCounter", JSON.stringify(stateEvents));
 }
 
 const cleanState = () => {
@@ -40,47 +40,44 @@ const cleanState = () => {
     eventDate.value = "";
 }
 
-const setEventHTML = (event) => {
-    const divContainer = document.createElement("div");
-    divContainer.setAttribute("id", event.idEvent);
+const handlerInputSpace = (e) => {
+    if(e.code === "Space" && eventInput.value.length <= 1)
+        eventInput.value = "";
+}
 
-    const divContainerDescription = document.createElement("div");
-    divContainerDescription.setAttribute("class", "description");
+const renderData = () => {
+    stateEvents.forEach(event => {
+        const divContainer = document.createElement("div");
+        divContainer.setAttribute("id", event.idEvent);
 
-    const divDate = document.createElement("div");
-    divDate.setAttribute("class", "dateEvent");
-    const nodeTime = document.createTextNode(new Date(event.dateEvent).toLocaleString());
-    divDate.appendChild(nodeTime); 
+        const divDescription = document.createElement("div");
+        divDescription.setAttribute("class", "description");
 
-    const para = document.createElement("p"); 
-    para.setAttribute("class", "titleEvent");
-    const node = document.createTextNode(event.titleEvent);
-    para.appendChild(node);
+        divDescription.innerHTML = `<div class="dateEvent">${new Date(event.dateEvent).toLocaleString()}</div>
+        <p class="titleEvent">${event.titleEvent}</p>`;
 
-    divContainerDescription.appendChild(divDate);
-    divContainerDescription.appendChild(para); 
+        const divTimer = document.createElement("div");
+        divTimer.setAttribute("class", "restTime");
+        const nodeTimer = (formatScreenRemainingTime(new Date(event.dateEvent) - new Date(Date.now())));
+        divTimer.appendChild(nodeTimer);
 
-    const divTimer = document.createElement("div");
-    divTimer.setAttribute("class", "restTime");
-    const nodeTimer = (formatScreenRemainingTime(new Date(event.dateEvent) - new Date(Date.now())));
-    divTimer.appendChild(nodeTimer);
+        const deletebtn = document.createElement("button");
+        deletebtn.setAttribute("id", "delete-"+event.idEvent); 
+        deletebtn.setAttribute("class", "btn-delete");
+        deletebtn.setAttribute("title", "Delete");
+        const deleteIcon = document.createElement("img");
+        deleteIcon.setAttribute("src", "assets/delete.svg");
+        deleteIcon.setAttribute("id", "delImg-"+event.idEvent);
+        deletebtn.appendChild(deleteIcon);
 
-    const deletebtn = document.createElement("button");
-    deletebtn.setAttribute("id", "delete-"+event.idEvent); 
-    deletebtn.setAttribute("class", "btn-delete");
-    deletebtn.setAttribute("title", "Delete");
-    const deleteIcon = document.createElement("img");
-    deleteIcon.setAttribute("src", "assets/delete_forever_FILL0_wght400_GRAD0_opsz24.svg");
-    deleteIcon.setAttribute("id", "delImg-"+event.idEvent);
-    deletebtn.appendChild(deleteIcon);
+        divContainer.appendChild(divDescription);
+        divContainer.appendChild(divTimer);
+        divContainer.appendChild(deletebtn);
 
-    divContainer.appendChild(divContainerDescription);
-    divContainer.appendChild(divTimer);
-    divContainer.appendChild(deletebtn);
-
-    eventsList.appendChild(divContainer);
-    startInterval(event);
-    setEventToDelete(event); 
+        eventsList.appendChild(divContainer);
+        startInterval(event);
+        setEventToDelete(event); 
+    });
 }
 
 const formatScreenRemainingTime = (time) => {
@@ -193,7 +190,9 @@ const handlerDelete = (e) => {
     const deleteEvent = e.target.id.split("-")[1];
     document.getElementById(deleteEvent).remove();
     stateEvents = stateEvents.filter((event) => event.idEvent != deleteEvent);
+    saveData();
 }
 
 form.addEventListener("submit", handlerSubmit);
 eventInput.addEventListener("keydown", handlerInputSpace);
+renderData();
